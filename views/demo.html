@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Todo App</title>
+
+  <!-- Disable browser old cache -->
+  <meta http-equiv="Cache-Control" content="no-store" />
+</head>
+
+<body>
+
+  <h2>Add Todo</h2>
+
+  <form action="http://localhost:5000/todos" method="POST">
+    <input name="title" placeholder="Title" required><br><br>
+    <textarea name="description" placeholder="Description" required></textarea><br><br>
+
+    <select name="purpose">
+      <option>Home</option>
+      <option>Office</option>
+      <option>Personal</option>
+      <option>Relationship</option>
+      <option>Love</option>
+    </select>
+    <br><br>
+
+    <button type="submit">Add Todo</button>
+  </form>
+
+  <h2>Todo List</h2>
+
+  <pre id="list">Loading...</pre>
+
+  <script>
+    fetch("http://localhost:5000/todos?refresh=" + Date.now())
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("list").textContent =
+          JSON.stringify(data, null, 2);
+      });
+  </script>
+
+</body>
+</html>
